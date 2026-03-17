@@ -1,4 +1,4 @@
-# Encrypted Chat TCP/UDP
+# Graph Search Algorithms
 
 ## Description
 This project implements three distinct graph search algorithms to solve pathfinding problems, specifically modeled after the "Labyrinth of Crete" challenge. It features an interactive command-line interface that allows users to load custom graph files, visualize graph summaries, and compare the efficiency and path quality of different search strategies.
