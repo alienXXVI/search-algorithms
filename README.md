@@ -1,148 +1,82 @@
+# Encrypted Chat TCP/UDP
 
-# Projeto: Algoritmos de Busca em Grafos
+## Description
+This project implements three distinct graph search algorithms to solve pathfinding problems, specifically modeled after the "Labyrinth of Crete" challenge. It features an interactive command-line interface that allows users to load custom graph files, visualize graph summaries, and compare the efficiency and path quality of different search strategies.
 
-Este projeto implementa três algoritmos de busca em grafos para resolver um problema de caminho no "labirinto de Creta". Os algoritmos podem ser acessados através de um menu interativo, permitindo a exploração de diferentes estratégias de busca.
+## Technologies
+-   **C++11** or superior
+-   **Standard Template Library (STL)**
+-   **Linux, MacOS, or Windows (MinGW/MSYS2)**
 
-## Algoritmos Implementados
+## Prerequisites
+To compile and execute this project, you must have one of the following installed:
+-   **GCC (g++)**
+-   **Clang**
 
-  * **Busca em Profundidade (DFS):** Encontra uma solução, mas não é garantidamente a melhor (pior solução).
-  * **A\*:** Encontra a melhor solução usando uma função heurística para maior eficiência.
-  * **Custo Uniforme (Dijkstra) com fio limitado:** Encontra caminhos respeitando uma restrição de comprimento, como um bônus para o projeto.
+## Features
+-   **Algorithm Variety**: Implements Depth-First Search (DFS) for basic exploration, A* for optimal heuristic-based pathfinding, and a specialized Dijkstra for constrained movement.
+-   **Heuristic Support**: Utilizes $h(n)$ values to guide the A* search toward the goal node efficiently.
+-   **Performance Metrics**: Tracks and displays "Expanded Nodes" to measure the computational efficiency of each search.
+-   **Custom Parser**: Reads graph definitions from text files, supporting both directed and undirected edges with associated costs.
+-   **Bonus Dijkstra**: A unique "Limited Wire" implementation of Dijkstra that discards paths exceeding a user-defined total distance.
 
------
+## How to Run
 
-## Estrutura do Projeto
+### 1. Compiling
 
-```
-/projeto
-│
-├── src/                  # Código-fonte
-│   ├── main.cpp          # Menu principal
-│   ├── graph.h/graph.cpp
-│   ├── dfs.h/dfs.cpp
-│   ├── astar.h/astar.cpp
-│   ├── dijkstra.h/dijkstra.cpp
-│   └── parser.h/parser.cpp
-│
-├── input/                # Arquivos de entrada (grafos)
-│   ├── exemplo1.txt
-│   └── exemplo2.txt
-│
-└── README.md             # Este arquivo
-```
+Navigate to the `src/` folder and run the following command to compile all files:
 
------
+    cd src
+    g++ -std=c++11 *.cpp -o busca
 
-## Pré-requisitos
+### 2. Execution
 
-Este projeto foi desenvolvido em **C++11** ou superior. Para compilar e executar, é preciso ter um dos seguintes instalados:
+To start the program, execute the following command in your terminal:
 
-  * **GCC (g++)** ou **Clang**
-  * **Sistema operacional Linux**, **MacOS** ou **Windows** (com MinGW/MSYS2)
+    ./busca
 
------
+### 3. Step-by-Step Instructions
 
-## Compilação
+1.  **Load a Graph**: Select **Option 1** and enter the input filename (e.g., `exemplo1.txt`). The file must be located inside the `input/` folder.
+2.  **View Summary**: The program will display the nodes, their heuristics, and their neighbors.
+3.  **Run Algorithms**:
+    -   **Option 2**: Executes Depth-First Search (DFS).
+    -   **Option 3**: Executes the A* algorithm.
+    -   **Option 4**: Executes the Uniform Cost (Dijkstra) algorithm with a wire limit (the program will prompt for the limit value).
+4.  **Exit**: Select **Option 0** to terminate the program.
 
-Navegue até a pasta `src/` e execute o comando abaixo para compilar todos os arquivos.
+## Input File Format
+Graphs must be defined in a text file using the following format:
 
-```sh
-cd src
-g++ -std=c++11 *.cpp -o busca
-```
+    ponto_inicial(a0).       % Starting point
+    ponto_final(f0).         % Target point
+    orientado(s).            % 's' for directed, 'n' for undirected
+    pode_ir(a0,b0,95).       % Edge between a0 and b0 with cost 95
+    h(a0,f0,58).             % Heuristic distance from a0 to f0 is 58
 
-Isso criará um arquivo executável chamado `busca` (ou `busca.exe` no Windows).
+-   `orientado`: Defines if the graph is directed.
+-   `ponto_inicial` / `ponto_final`: Define the start and goal nodes.
+-   `pode_ir`: Defines connections and their costs.
+-   `h`: Heuristic value (used for A*).
 
------
+## Project Structure
 
-## Execução
+-   **`src/`**: Source code files including `main.cpp`, `graph`, `dfs`, `astar`, `dijkstra`, and `parser`.
+-   **`input/`**: Directory containing graph input files (e.g., `exemplo_pequeno.txt`, `exemplo_medio.txt`).
+-   **`README.md`**: Project documentation.
 
-Para rodar o programa, execute o seguinte comando no terminal:
+## What I Learned
 
-```sh
-./busca
-```
+-   **Algorithm Design**: Practical application of $f(n) = g(n) + h(n)$ to optimize search space exploration in A*.
+-   **Memory Management**: Efficiently using `unordered_map` and `unordered_set` for $O(1)$ lookups of visited nodes and costs.
+-   **Data Parsing**: Implementing a robust parser to handle file comments (`%`) and specific formatting rules.
+-   **Problem Constraints**: Integrating physical limitations (the "wire" limit) into standard shortest-path algorithms.
 
-Você verá um menu com as opções disponíveis:
 
-```
-===== MENU PRINCIPAL =====
-1. Ler arquivo de entrada e imprimir resumo do grafo
-2. Executar Busca em Profundidade (DFS) - Pior Solução
-3. Executar A* - Melhor Solução
-4. Executar Custo Uniforme (Dijkstra) com fio limitado - Bônus
-0. Sair
-Escolha uma opcao:
-```
+## Future Improvements
 
------
+-   **Visual Representation**: Implement a graphical visualization of the maze and the expansion of the search frontier.
+-   **Enhanced Heuristics**: Add support for different heuristic calculations, such as Manhattan or Euclidean distance.
+-   **Bidirectional Search**: Implement bidirectional A* to further reduce the number of expanded nodes for large graphs.
 
-## Passo a Passo
 
-1.  **Carregar um grafo:**
-
-      * Escolha a opção **1** e digite o nome do arquivo de entrada (ex: `exemplo1.txt`). O arquivo deve estar na pasta `input/`.
-      * *Exemplo: `Digite o nome do arquivo de entrada (na pasta input/): exemplo1.txt`*
-
-2.  **Visualizar resumo:**
-
-      * O programa irá mostrar os nós, suas heurísticas e os vizinhos.
-
-3.  **Executar algoritmos:**
-
-      * **Opção 2:** Executa a Busca em Profundidade (DFS).
-      * **Opção 3:** Executa o algoritmo A\*.
-      * **Opção 4:** Executa o algoritmo Custo Uniforme com limite de fio (o programa pedirá o valor do fio).
-
-4.  **Finalizar:**
-
-      * A opção **0** encerra o programa.
-
------
-
-## Formato dos Arquivos de Entrada
-
-Um grafo deve ser definido em um arquivo de texto com o seguinte formato:
-
-```
-ponto_inicial(a0).       % Ponto inicial da busca
-ponto_final(f0).         % Ponto final da busca
-orientado(s).            % Indica grafo orientado
-%orientado(n).           % Indica grafo nao orientado
-pode_ir(a0,b0,95).       % Existe uma ligacao entre a0 e b0
-% O custo para chegar em b0 partindo de a0 eh 95
-pode_ir(a0,c0,44).       % Caso nao orientado, o custo para a0 partindo de c0 eh 44
-pode_ir(a0,d0,98).
-pode_ir(a0,e0,49).
-pode_ir(b0,c0,60).
-pode_ir(b0,e0,31).
-pode_ir(b0,f0,44).
-pode_ir(d0,c0,32).
-pode_ir(d0,e0,28).
-pode_ir(d0,f0,34).
-h(a0,f0,58).             % A distancia em linha reta de a0 ate f0 eh 58
-h(b0,f0,24).
-h(c0,f0,34).
-h(d0,f0,37).
-h(e0,f0,5).
-h(f0,f0,0).
-```
-
-  * `orientado`: **s** (sim) / **n** (não) - define se o grafo é direcionado.
-  * `ponto_inicial` / `ponto_final`: definem os nós inicial e objetivo.
-  * `pode_ir`: define as conexões entre nós e seus respectivos custos.
-  * `h`: valor da heurística (usado apenas no algoritmo A\*).
-
------
-
-## Saídas do Programa
-
-Durante a execução, o programa exibirá as seguintes informações:
-
-  * Iterações do algoritmo.
-  * Lista de nós que fazem parte da fronteira de busca.
-  * Medida de desempenho: **número de nós expandidos**.
-  * Distância total percorrida (solução final).
-  * Caminho final encontrado (ou aviso se a solução não existe).
-  * Caminhos descartados (no caso do bônus).
-  * Comprimento restante do fio (no caso do bônus).
